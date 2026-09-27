@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #faf9f7;
+  color: #2c2c2c;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+h1, h2, h3, .font-display {
+  font-family: "Playfair Display", serif;
+}
+
+::selection {
+  background-color: #bcaaa4;
+  color: #2c2c2c;
+}
+
+.container-page {
+  @apply max-w-7xl mx-auto px-5 sm:px-8 lg:px-10;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium transition-all duration-200 whitespace-nowrap;
+}
+
+.btn-primary {
+  @apply btn bg-primary text-white hover:bg-primary-dark shadow-card hover:shadow-cardHover;
+}
+
+.btn-outline {
+  @apply btn border border-primary text-primary hover:bg-primary hover:text-white;
+}
+
+.btn-light {
+  @apply btn bg-white text-primary border border-secondary hover:border-primary;
+}
+
+.card {
+  @apply bg-white rounded-xl2 shadow-card border border-secondary/40;
+}
+
+.section {
+  @apply py-16 sm:py-20;
+}
+
+.badge {
+  @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
+}
+
+.badge-success {
+  @apply badge bg-success/10 text-success;
+}
+
+.badge-warning {
+  @apply badge bg-warning/10 text-warning;
+}
+
+.badge-danger {
+  @apply badge bg-danger/10 text-danger;
+}
+
+.input-field {
+  @apply w-full rounded-lg border border-secondary bg-white px-4 py-2.5 text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition;
+}
+
+.label-field {
+  @apply mb-1.5 block text-sm font-medium text-ink/80;
+}

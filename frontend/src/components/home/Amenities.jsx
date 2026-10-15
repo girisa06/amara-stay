@@ -7,11 +7,7 @@ export default function Amenities() {
   return (
     <section className="section bg-secondary/20">
       <div className="container-page">
-        <SectionHeading
-          eyebrow="Amenities"
-          title="Everything You Need, Included"
-          description="Thoughtfully curated amenities that make everyday living comfortable."
-        />
+        <SectionHeading eyebrow="Facilities" title="What's Included" />
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
           {AMENITIES.map((amenity, index) => {
             const Icon = Icons[amenity.icon] || Icons.Sparkles;

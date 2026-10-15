@@ -1,36 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, GraduationCap, Building2, Bus, ShieldCheck } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import SectionHeading from "../components/home/SectionHeading";
-import {
-  HOUSE_RULES,
-  SAFETY_FEATURES,
-  NEARBY_COLLEGES,
-  NEARBY_IT_PARKS,
-  NEARBY_TRANSPORT,
-} from "../constants/content";
-
-function ListCard({ icon: Icon, title, items }) {
-  return (
-    <div className="card p-6">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-          <Icon className="h-5 w-5 text-primary" />
-        </div>
-        <h3 className="font-semibold text-ink">{title}</h3>
-      </div>
-      <ul className="space-y-2">
-        {items.map((item) => (
-          <li key={item} className="text-sm text-ink/70 flex items-start gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+import { HOUSE_RULES, AMENITIES, GALLERY, IMAGES } from "../constants/content";
 
 export default function About() {
+  const [active, setActive] = useState(null);
+
   return (
     <div className="pb-10">
       <section className="bg-secondary/30 py-16">
@@ -40,44 +16,46 @@ export default function About() {
               About AMARA Ladies PG
             </p>
             <h1 className="font-display text-3xl sm:text-4xl font-bold text-ink mb-4">
-              A Safe, Trusted Home Away From Home
+              A Comfortable Home Away From Home
             </h1>
-            <p className="text-ink/70 mb-6 leading-relaxed">
-              AMARA Ladies PG has been offering premium accommodation to students and working
-              women in Chennai. With 24/7 security, home-style food and a warm community, we've
-              built a reputation as a trusted, parent-approved living space for over 60 residents
-              across our property.
+            <p className="text-ink/70 leading-relaxed">
+              AMARA Ladies PG offers 2, 3 and 4 sharing rooms (AC and Non-AC) with three times
+              complimentary homestyle food, a kitchen for self-cooking, washing machines,
+              high-speed Wi-Fi throughout the building and individual lockable lockers.
             </p>
-            <div className="flex flex-wrap gap-6">
-              {["6+ Years", "60+ Residents", "4.8★ Rating"].map((stat) => (
-                <div key={stat} className="flex items-center gap-2 text-sm font-medium text-ink/80">
-                  <CheckCircle2 className="h-4 w-4 text-success" /> {stat}
-                </div>
-              ))}
-            </div>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="rounded-xl2 overflow-hidden shadow-cardHover aspect-[4/3]"
-          >
+          <div className="flex justify-center">
             <img
-              src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80"
-              alt="AMARA Ladies PG property"
-              className="w-full h-full object-cover"
+              src={IMAGES.building}
+              alt="AMARA Ladies PG building"
+              className="rounded-xl2 shadow-cardHover max-w-sm w-full"
             />
-          </motion.div>
+          </div>
         </div>
       </section>
 
       <div className="container-page py-16 space-y-16">
         <div>
+          <SectionHeading eyebrow="Facilities" title="What's Included" center={false} />
+          <div className="card p-6">
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {AMENITIES.map((a) => (
+                <li key={a.name} className="flex items-center gap-3 text-sm text-ink/70">
+                  <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
+                  {a.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div>
           <SectionHeading eyebrow="Guidelines" title="House Rules" center={false} />
           <div className="card p-6">
             <ul className="space-y-3">
-              {HOUSE_RULES.map((rule) => (
+              {HOUSE_RULES.map((rule, i) => (
                 <li key={rule} className="flex items-start gap-3 text-sm text-ink/70">
-                  <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span className="font-semibold text-primary">{i + 1}.</span>
                   {rule}
                 </li>
               ))}
@@ -86,33 +64,34 @@ export default function About() {
         </div>
 
         <div>
-          <SectionHeading
-            eyebrow="Safety Standards"
-            title="Women's Security Measures"
-            center={false}
-          />
-          <div className="grid sm:grid-cols-2 gap-5">
-            {SAFETY_FEATURES.map((feature) => (
-              <div key={feature.title} className="card p-5 flex gap-3">
-                <ShieldCheck className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-medium text-ink text-sm mb-1">{feature.title}</p>
-                  <p className="text-sm text-ink/60">{feature.description}</p>
-                </div>
-              </div>
+          <SectionHeading eyebrow="Gallery" title="Take a Look Inside" center={false} />
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {GALLERY.map((g) => (
+              <button
+                key={g.src}
+                onClick={() => setActive(g)}
+                className="card overflow-hidden text-left"
+              >
+                <img src={g.src} alt={g.caption} className="w-full aspect-[4/3] object-cover" />
+                <p className="px-3 py-2 text-xs text-ink/70">{g.caption}</p>
+              </button>
             ))}
           </div>
         </div>
-
-        <div>
-          <SectionHeading eyebrow="Location" title="What's Nearby" center={false} />
-          <div className="grid sm:grid-cols-3 gap-6">
-            <ListCard icon={GraduationCap} title="Nearby Colleges" items={NEARBY_COLLEGES} />
-            <ListCard icon={Building2} title="Nearby IT Parks" items={NEARBY_IT_PARKS} />
-            <ListCard icon={Bus} title="Transportation" items={NEARBY_TRANSPORT} />
-          </div>
-        </div>
       </div>
+
+      {active && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setActive(null)}
+        >
+          <img
+            src={active.src}
+            alt={active.caption}
+            className="max-h-[90vh] max-w-[92vw] object-contain rounded-lg"
+          />
+        </div>
+      )}
     </div>
   );
 }

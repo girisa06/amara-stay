@@ -2,10 +2,9 @@ import { SlidersHorizontal, X } from "lucide-react";
 
 const ROOM_TYPES = [
   { value: "", label: "All Types" },
-  { value: "single", label: "Single Sharing" },
-  { value: "double", label: "Double Sharing" },
-  { value: "triple", label: "Triple Sharing" },
-  { value: "four", label: "Four Sharing" },
+  { value: "double", label: "2 Sharing" },
+  { value: "triple", label: "3 Sharing" },
+  { value: "four", label: "4 Sharing" },
 ];
 
 const AVAILABILITY_OPTIONS = [

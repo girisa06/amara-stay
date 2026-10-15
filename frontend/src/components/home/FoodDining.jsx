@@ -1,57 +1,51 @@
-import { motion } from "framer-motion";
-import { UtensilsCrossed, Leaf, Clock3, ChefHat } from "lucide-react";
 import SectionHeading from "./SectionHeading";
-
-const HIGHLIGHTS = [
-  { icon: Leaf, text: "Fresh, home-style vegetarian and non-vegetarian meals" },
-  { icon: Clock3, text: "Fixed meal timings with flexibility for shift workers" },
-  { icon: ChefHat, text: "Hygienic kitchen with weekly menu rotation" },
-  { icon: UtensilsCrossed, text: "Special diet plans available on request" },
-];
+import { FOOD_MENU } from "../../constants/content";
 
 export default function FoodDining() {
+  const { timings, days, notes } = FOOD_MENU;
   return (
-    <section className="section bg-secondary/20">
-      <div className="container-page grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <SectionHeading
-            eyebrow="Food & Dining"
-            title="Meals That Feel Like Home"
-            center={false}
-          />
-          <div className="grid sm:grid-cols-2 gap-5">
-            {HIGHLIGHTS.map((item, index) => (
-              <motion.div
-                key={item.text}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.08 }}
-                className="flex gap-3 items-start"
-              >
-                <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <item.icon className="h-4.5 w-4.5 text-primary" />
-                </div>
-                <p className="text-sm text-ink/70">{item.text}</p>
-              </motion.div>
+    <section className="section container-page">
+      <SectionHeading
+        eyebrow="Food & Dining"
+        title="Weekly Food Menu"
+        description="Three times homestyle food, complimentary for everyone staying with us."
+      />
+      <div className="card overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
+          <thead>
+            <tr className="bg-secondary/40 text-left">
+              <th className="px-4 py-3 w-28"></th>
+              <th className="px-4 py-3">
+                Breakfast
+                <span className="block text-xs font-normal text-ink/60">{timings.breakfast}</span>
+              </th>
+              <th className="px-4 py-3">
+                Lunch
+                <span className="block text-xs font-normal text-ink/60">{timings.sunday}</span>
+              </th>
+              <th className="px-4 py-3">
+                Dinner
+                <span className="block text-xs font-normal text-ink/60">{timings.dinner}</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {days.map(([day, b, l, d]) => (
+              <tr key={day} className="border-t border-secondary/60">
+                <td className="px-4 py-3 font-medium text-ink">{day}</td>
+                <td className="px-4 py-3 text-ink/70">{b}</td>
+                <td className="px-4 py-3 text-ink/70">{l}</td>
+                <td className="px-4 py-3 text-ink/70">{d}</td>
+              </tr>
             ))}
-          </div>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="rounded-xl2 overflow-hidden shadow-cardHover"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1540518614846-7a939ddd6e11?auto=format&fit=crop&w=1200&q=80"
-            alt="Dining area at AMARA Ladies PG"
-            className="w-full h-full object-cover aspect-[4/3]"
-          />
-        </motion.div>
+          </tbody>
+        </table>
       </div>
+      <ul className="mt-4 text-sm text-ink/60 space-y-1">
+        {notes.map((n) => (
+          <li key={n}>• {n}</li>
+        ))}
+      </ul>
     </section>
   );
 }

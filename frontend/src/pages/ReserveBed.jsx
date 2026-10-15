@@ -226,12 +226,14 @@ export default function ReserveBed() {
                       ₹{Number(selectedRoom.rent).toLocaleString("en-IN")}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-ink/60">Security Deposit</span>
-                    <span className="font-medium text-ink">
-                      ₹{Number(selectedRoom.deposit).toLocaleString("en-IN")}
-                    </span>
-                  </div>
+                  {Number(selectedRoom.deposit) > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-ink/60">Security Deposit</span>
+                      <span className="font-medium text-ink">
+                        ₹{Number(selectedRoom.deposit).toLocaleString("en-IN")}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex justify-between border-t border-secondary pt-3">
                     <span className="text-ink/60">Advance Paid</span>
                     <span className="font-medium text-ink">

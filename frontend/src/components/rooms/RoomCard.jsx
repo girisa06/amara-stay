@@ -4,10 +4,10 @@ import { Maximize2, IndianRupee, ArrowRight } from "lucide-react";
 import AvailabilityBadge from "../common/AvailabilityBadge";
 
 const ROOM_TYPE_LABELS = {
-  single: "Single Sharing",
-  double: "Double Sharing",
-  triple: "Triple Sharing",
-  four: "Four Sharing",
+  
+  double: "2 Sharing",
+  triple: "3 Sharing",
+  four: "4 Sharing",
 };
 
 export default function RoomCard({ room, index = 0 }) {
@@ -47,11 +47,13 @@ export default function RoomCard({ room, index = 0 }) {
         <div className="flex items-center gap-1 text-primary font-semibold mb-1">
           <IndianRupee className="h-4 w-4" />
           {Number(room.rent).toLocaleString("en-IN")}
-          <span className="text-xs text-ink/50 font-normal ml-1">/month</span>
+          <span className="text-xs text-ink/50 font-normal ml-1">/bed/month</span>
         </div>
-        <p className="text-xs text-ink/50 mb-3">
-          Deposit: ₹{Number(room.deposit).toLocaleString("en-IN")}
-        </p>
+        {Number(room.deposit) > 0 && (
+          <p className="text-xs text-ink/50 mb-3">
+            Deposit: ₹{Number(room.deposit).toLocaleString("en-IN")}
+          </p>
+        )}
 
         {room.room_size && (
           <div className="flex items-center gap-1.5 text-xs text-ink/60 mb-3">

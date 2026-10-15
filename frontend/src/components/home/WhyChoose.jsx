@@ -1,37 +1,37 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, UtensilsCrossed, Wifi, HeartHandshake, MapPin, Clock } from "lucide-react";
+import { UtensilsCrossed, Wifi, BedDouble, Lock, WashingMachine, ChefHat } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 
 const REASONS = [
   {
-    icon: ShieldCheck,
-    title: "Verified Safety",
-    description: "CCTV surveillance, biometric entry, and round-the-clock security staff.",
+    icon: BedDouble,
+    title: "2, 3 & 4 Sharing Rooms",
+    description: "Choose AC or Non-AC rooms to suit your budget.",
   },
   {
     icon: UtensilsCrossed,
-    title: "Home-Style Food",
-    description: "Nutritious meals prepared fresh daily, with vegetarian and diet options.",
+    title: "Complimentary Meals",
+    description: "Homestyle food three times a day, included for everyone staying with us.",
+  },
+  {
+    icon: ChefHat,
+    title: "Self-Cooking Kitchen",
+    description: "A kitchen is available if you prefer to cook your own meals.",
+  },
+  {
+    icon: WashingMachine,
+    title: "Laundry",
+    description: "Washing machines are provided for residents.",
   },
   {
     icon: Wifi,
-    title: "Modern Amenities",
-    description: "High-speed WiFi, AC rooms, laundry and housekeeping included.",
+    title: "High-Speed Wi-Fi",
+    description: "Wi-Fi access throughout the building.",
   },
   {
-    icon: HeartHandshake,
-    title: "Parent-Friendly",
-    description: "Transparent policies and regular updates that give parents peace of mind.",
-  },
-  {
-    icon: MapPin,
-    title: "Prime Location",
-    description: "Minutes from top colleges, IT parks and public transport.",
-  },
-  {
-    icon: Clock,
-    title: "Flexible Stay",
-    description: "Short and long-term stay options tailored to students and professionals.",
+    icon: Lock,
+    title: "Individual Lockers",
+    description: "Every resident gets a lockable locker for their belongings.",
   },
 ];
 
@@ -41,7 +41,7 @@ export default function WhyChoose() {
       <SectionHeading
         eyebrow="Why AMARA"
         title="Why Choose AMARA Ladies PG"
-        description="Everything you need for a safe, comfortable and convenient stay, thoughtfully designed for women."
+        description="Everything you need for a comfortable stay, included in your rent."
       />
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {REASONS.map((reason, index) => (

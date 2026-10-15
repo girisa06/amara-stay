@@ -1,4 +1,5 @@
 import { useAuth } from "../../context/AuthContext";
+import { CONTACT } from "../../constants/content";
 
 export default function AdminSettings() {
   const { user } = useAuth();
@@ -7,7 +8,7 @@ export default function AdminSettings() {
     <div className="space-y-6 max-w-2xl">
       <div>
         <h1 className="font-display text-2xl font-bold text-ink mb-1">Settings</h1>
-        <p className="text-ink/60 text-sm">Manage your account and property contact details.</p>
+        <p className="text-ink/60 text-sm">Account and property contact details.</p>
       </div>
 
       <div className="card p-6">
@@ -22,30 +23,17 @@ export default function AdminSettings() {
             <input className="input-field" value={user?.email || ""} disabled />
           </div>
         </div>
-        <p className="text-xs text-ink/40 mt-3">
-          To change account credentials, please contact your system administrator.
-        </p>
       </div>
 
       <div className="card p-6">
-        <h3 className="font-semibold text-ink mb-4">Property Contact Details</h3>
+        <h3 className="font-semibold text-ink mb-4">Property Contact Numbers</h3>
         <div className="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label className="label-field">Owner Phone</label>
-            <input className="input-field" value="+91 90000 00000" disabled />
-          </div>
-          <div>
-            <label className="label-field">Owner WhatsApp</label>
-            <input className="input-field" value="+91 90000 00000" disabled />
-          </div>
-          <div className="sm:col-span-2">
-            <label className="label-field">Owner Email</label>
-            <input className="input-field" value="owner@amarastay.in" disabled />
-          </div>
+          {CONTACT.phones.map((p) => (
+            <input key={p} className="input-field" value={p} disabled />
+          ))}
         </div>
         <p className="text-xs text-ink/40 mt-3">
-          Contact details are configured via environment variables on the backend
-          (OWNER_PHONE, OWNER_WHATSAPP, OWNER_EMAIL).
+          Contact numbers are set in src/constants/content.js.
         </p>
       </div>
     </div>

@@ -16,7 +16,6 @@ def contact_info():
     return {
         "phone": settings.OWNER_PHONE,
         "whatsapp": settings.OWNER_WHATSAPP,
-        "email": settings.OWNER_EMAIL,
     }
 
 

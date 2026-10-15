@@ -1,26 +1,26 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { Phone, MessageCircle, Mail, CheckCircle2, Send } from "lucide-react";
+import { Phone, MessageCircle, CheckCircle2, Send } from "lucide-react";
 import { createEnquiry } from "../api/enquiries";
 
 const QUICK_CONTACTS = [
   {
     icon: Phone,
-    label: "Call Owner",
-    href: "tel:+919000000000",
+    label: "Call 9841321999",
+    href: "tel:+919841321999",
     className: "btn-outline",
   },
   {
     icon: MessageCircle,
     label: "WhatsApp Owner",
-    href: "https://wa.me/919000000000",
+    href: "https://wa.me/919841321999",
     className: "btn bg-success text-white hover:bg-success/90",
   },
   {
-    icon: Mail,
-    label: "Email Owner",
-    href: "mailto:owner@amarastay.in",
+    icon: Phone,
+    label: "Call 8939934999",
+    href: "tel:+918939934999",
     className: "btn-light",
   },
 ];

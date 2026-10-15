@@ -1,116 +1,91 @@
-export const AMENITIES = [
-  { name: "High-Speed WiFi", icon: "Wifi" },
-  { name: "Air Conditioning", icon: "Snowflake" },
-  { name: "Laundry Service", icon: "WashingMachine" },
-  { name: "CCTV Surveillance", icon: "Camera" },
-  { name: "24/7 Security", icon: "ShieldCheck" },
-  { name: "Housekeeping", icon: "Sparkles" },
-  { name: "RO Water", icon: "GlassWater" },
-  { name: "Food Facility", icon: "UtensilsCrossed" },
+export const CONTACT = {
+  phones: ["9841321999", "8939934999"],
+  whatsapp: "919841321999",
+};
+
+export const IMAGES = {
+  building: "/images/building.jpeg",
+  menu: "/images/food-menu.jpeg",
+  two: "/images/room-2-sharing.jpeg",
+  three: "/images/room-3-sharing.jpeg",
+  four: "/images/room-4-sharing.jpeg",
+  lockers: "/images/room-lockers.jpeg",
+};
+
+export const GALLERY = [
+  { src: IMAGES.building, caption: "Our building" },
+  { src: IMAGES.two, caption: "2 sharing room" },
+  { src: IMAGES.three, caption: "3 sharing room" },
+  { src: IMAGES.four, caption: "4 sharing room" },
+  { src: IMAGES.lockers, caption: "Individual lockable lockers" },
 ];
 
-export const SAFETY_FEATURES = [
-  {
-    title: "Biometric & CCTV Access",
-    description: "Entry is monitored through biometric access and CCTV covering all common areas.",
-  },
-  {
-    title: "24/7 Female Warden",
-    description: "A dedicated female warden is on-site at all times for resident support.",
-  },
-  {
-    title: "Visitor Verification",
-    description: "All visitors are logged with ID verification at the front desk.",
-  },
-  {
-    title: "Emergency Contact Protocol",
-    description: "Emergency numbers and nearest hospital contacts are displayed on every floor.",
-  },
+export const PRICING = [
+  { type: "double", label: "2 Sharing", nonAc: 7500, ac: 12500, image: IMAGES.two },
+  { type: "triple", label: "3 Sharing", nonAc: 7000, ac: 9000, image: IMAGES.three },
+  { type: "four", label: "4 Sharing", nonAc: 6500, ac: 8000, image: IMAGES.four },
+];
+
+export const AMENITIES = [
+  { name: "2, 3 & 4 Sharing Rooms", icon: "BedDouble" },
+  { name: "AC & Non-AC Options", icon: "Snowflake" },
+  { name: "3 Meals Complimentary", icon: "UtensilsCrossed" },
+  { name: "Self-Cooking Kitchen", icon: "ChefHat" },
+  { name: "Washing Machines", icon: "WashingMachine" },
+  { name: "High-Speed Wi-Fi", icon: "Wifi" },
+  { name: "Individual Lockers", icon: "Lock" },
 ];
 
 export const HOUSE_RULES = [
-  "Entry timing between 6:00 AM and 10:00 PM (10:30 PM on weekends).",
-  "Visitors are permitted only in common areas and must register at the front desk.",
-  "Smoking, alcohol and non-vegetarian food restrictions apply in shared kitchens.",
-  "Quiet hours from 11:00 PM to 6:00 AM to respect fellow residents.",
-  "Advance notice of 30 days required before vacating a reserved bed.",
+  "Inform 30 days in advance before vacating.",
+  "Enter the hostel before 10:30 PM.",
+  "Drinking and smoking are strictly prohibited.",
 ];
 
-export const NEARBY_COLLEGES = [
-  "Anna University — 3.2 km",
-  "SRM Institute of Science and Technology — 6.5 km",
-  "Loyola College — 4.1 km",
-  "MOP Vaishnav College for Women — 2.8 km",
-];
-
-export const NEARBY_IT_PARKS = [
-  "Tidel Park — 2.5 km",
-  "DLF IT Park, Manapakkam — 7.0 km",
-  "RMZ Millenia Business Park — 3.6 km",
-  "Ascendas IT Park — 5.4 km",
-];
-
-export const NEARBY_TRANSPORT = [
-  "Adyar Bus Terminus — 0.8 km",
-  "Guindy Railway Station — 3.5 km",
-  "Thiruvanmiyur MRTS Station — 2.2 km",
-  "Chennai Airport — 12 km",
-];
-
-export const TESTIMONIALS = [
-  {
-    name: "Priya Sundaram",
-    role: "Software Engineer",
-    rating: 5,
-    review:
-      "AMARA Stay feels like home. The security is excellent and my parents are always at ease knowing where I live.",
+export const FOOD_MENU = {
+  timings: {
+    breakfast: "7:45 am - 9:45 am",
+    sunday: "Sunday: 9 - 10 am & 1:00 pm - 2:00 pm",
+    dinner: "7:30 pm - 9:00 pm",
   },
-  {
-    name: "Anjali Menon",
-    role: "College Student",
-    rating: 5,
-    review:
-      "Clean rooms, great food and a genuinely caring owner. Best PG experience I've had in Chennai.",
-  },
-  {
-    name: "Divya Ramesh",
-    role: "Working Professional",
-    rating: 4,
-    review:
-      "Loved the location and amenities. WiFi is fast and the housekeeping team is very responsive.",
-  },
-  {
-    name: "Sneha Iyer",
-    role: "MBA Student",
-    rating: 5,
-    review:
-      "Booking a visit and reserving my bed was so simple through the website. Highly recommend AMARA Stay.",
-  },
-];
+  days: [
+    ["Monday", "Pongal, Sambar", "Tomato Rice, Egg/Poriyal", "Dosai, Sambar"],
+    ["Tuesday", "Kichedi, Chutney", "White Rice, Sambar, Poriyal/Appalam", "Poori/Chappathi, Kurma"],
+    ["Wednesday", "Idly, Sambar", "Tamarind Rice, Poriyal", "Veg Biryani, Raitha"],
+    ["Thursday", "Semiya, Chutney", "White Rice, Veg Curry, Appalam", "Idly/Noodles, Sambar"],
+    ["Friday", "Pongal, Sambar", "Lemon Rice, Poriyal", "Dosai, Chutney"],
+    ["Saturday", "Upma, Chutney", "White Rice, Veg Curry, Poriyal/Appalam", "Noodles/Pasta (7pm to 8:30pm)"],
+    ["Sunday", "Semiya Kichedi", "White Rice, Chicken Curry, Veg Curry & Rasam", "Rice, Sambar/Rasam, Appalam"],
+  ],
+  notes: [
+    "Food is complimentary for all those staying with us.",
+    "Everyone is requested to follow the timings.",
+    "Menu will change sometimes.",
+  ],
+};
 
 export const FAQS = [
   {
-    question: "What documents are required at check-in?",
+    question: "Which room types are available?",
     answer:
-      "You'll need a government-issued photo ID, a passport-size photograph, and your college or company ID for verification.",
+      "2, 3 and 4 sharing rooms, each available as AC or Non-AC. Rent starts at Rs. 6,500 per month for a 4 sharing Non-AC bed.",
   },
   {
     question: "Is food included in the rent?",
     answer:
-      "Yes, breakfast and dinner are included in most room plans. Lunch can be added on request for an additional fee.",
-  },
-  {
-    question: "Can I schedule a visit before booking?",
-    answer:
-      "Absolutely. Use the 'Book a Visit' option to choose a convenient date and time slot to tour the property.",
+      "Yes. Three times homestyle food is complimentary for everyone staying with us. A kitchen is also available if you prefer to cook yourself.",
   },
   {
     question: "What is the notice period before vacating?",
-    answer: "We require a 30-day advance notice before vacating a reserved bed.",
+    answer: "You must inform us 30 days in advance before vacating.",
   },
   {
-    question: "Is the deposit refundable?",
+    question: "What is the entry time?",
+    answer: "Residents must enter the hostel before 10:30 PM.",
+  },
+  {
+    question: "Can I visit before booking?",
     answer:
-      "Yes, the security deposit is fully refundable at the time of checkout, subject to a damage inspection.",
+      "Yes. Use 'Book a Visit' to choose a date and time slot, or call us on 9841321999 / 8939934999.",
   },
 ];

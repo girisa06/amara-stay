@@ -8,10 +8,10 @@ import Loader from "../components/common/Loader";
 import EmptyState from "../components/common/EmptyState";
 
 const ROOM_TYPE_LABELS = {
-  single: "Single Sharing",
-  double: "Double Sharing",
-  triple: "Triple Sharing",
-  four: "Four Sharing",
+  
+  double: "2 Sharing",
+  triple: "3 Sharing",
+  four: "4 Sharing",
 };
 
 export default function RoomDetails() {
@@ -104,12 +104,14 @@ export default function RoomDetails() {
             <p className="text-2xl font-bold text-primary mb-4">
               ₹{Number(room.rent).toLocaleString("en-IN")}
             </p>
-            <div className="flex justify-between text-sm text-ink/60 mb-6 border-t border-secondary pt-4">
-              <span>Security Deposit</span>
-              <span className="font-medium text-ink">
-                ₹{Number(room.deposit).toLocaleString("en-IN")}
-              </span>
-            </div>
+            {Number(room.deposit) > 0 && (
+              <div className="flex justify-between text-sm text-ink/60 mb-6 border-t border-secondary pt-4">
+                <span>Security Deposit</span>
+                <span className="font-medium text-ink">
+                  ₹{Number(room.deposit).toLocaleString("en-IN")}
+                </span>
+              </div>
+            )}
 
             <div className="flex flex-col gap-3">
               <Link to="/book-visit" className="btn-outline w-full">
@@ -121,7 +123,7 @@ export default function RoomDetails() {
               >
                 <BedDouble className="h-4 w-4" /> {isFull ? "Fully Occupied" : "Reserve Bed"}
               </Link>
-              <a href="tel:+919000000000" className="btn-light w-full">
+              <a href="tel:+919841321999" className="btn-light w-full">
                 <Phone className="h-4 w-4" /> Contact Owner
               </a>
             </div>

@@ -7,9 +7,8 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
     CORS_ORIGINS: str = "http://localhost:5173"
-    OWNER_PHONE: str = "+91 90000 00000"
-    OWNER_WHATSAPP: str = "+91 90000 00000"
-    OWNER_EMAIL: str = "owner@amarastay.in"
+    OWNER_PHONE: str = "+91 9841321999"
+    OWNER_WHATSAPP: str = "+91 9841321999"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

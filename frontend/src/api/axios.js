@@ -18,6 +18,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem("amara_token");
       localStorage.removeItem("amara_user");
+      window.dispatchEvent(new Event("amara:unauthorized"));
     }
     return Promise.reject(error);
   }

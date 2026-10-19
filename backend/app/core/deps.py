@@ -20,9 +20,9 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     try:
         payload = decode_access_token(token)
         user_id = payload.get("sub")
-        if user_id is None:
+        if not isinstance(user_id, (str, int)) or not str(user_id).isdigit():
             raise credentials_exception
-    except JWTError:
+    except (JWTError, ValueError, TypeError):
         raise credentials_exception
 
     user = db.query(User).filter(User.id == int(user_id)).first()
@@ -39,9 +39,9 @@ def get_optional_current_user(
     try:
         payload = decode_access_token(token)
         user_id = payload.get("sub")
-        if user_id is None:
+        if not isinstance(user_id, (str, int)) or not str(user_id).isdigit():
             return None
-    except JWTError:
+    except (JWTError, ValueError, TypeError):
         return None
     return db.query(User).filter(User.id == int(user_id)).first()
 

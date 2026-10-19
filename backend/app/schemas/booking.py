@@ -1,7 +1,9 @@
 from datetime import datetime
 from decimal import Decimal
 
-from pydantic import BaseModel, ConfigDict, EmailStr
+from typing import Literal
+
+from pydantic import BaseModel, ConfigDict, EmailStr, model_validator
 
 from app.models.booking import BookingStatus
 
@@ -19,7 +21,13 @@ class BookingCreate(BaseModel):
 
 class BookingStatusUpdate(BaseModel):
     status: BookingStatus
-    payment_status: str | None = None
+    payment_status: Literal["unpaid", "partial", "paid"] | None = None
+
+    @model_validator(mode="after")
+    def payment_updates_require_confirmed_reservation(self):
+        if self.payment_status is not None and self.status != BookingStatus.confirmed:
+            raise ValueError("Payment status can only be updated on confirmed reservations")
+        return self
 
 
 class BookingOut(BaseModel):

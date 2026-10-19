@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Plus, Pencil, Trash2, BedDouble } from "lucide-react";
-import { getRooms, createRoom, updateRoom, deleteRoom } from "../../api/rooms";
+import { Plus, Pencil, Trash2, BedDouble, CircleSlash } from "lucide-react";
+import { getRooms, createRoom, updateRoom, updateRoomAvailability, deleteRoom } from "../../api/rooms";
 import AvailabilityBadge from "../../components/common/AvailabilityBadge";
 import RoomFormModal from "../../components/admin/RoomFormModal";
 import Loader from "../../components/common/Loader";
@@ -11,11 +11,18 @@ export default function AdminRooms() {
   const [loading, setLoading] = useState(true);
   const [modalRoom, setModalRoom] = useState(undefined);
   const [deletingId, setDeletingId] = useState(null);
+  const [updatingAvailabilityId, setUpdatingAvailabilityId] = useState(null);
+  const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
 
   const loadRooms = () => {
     setLoading(true);
     getRooms()
-      .then(setRooms)
+      .then((loadedRooms) => {
+        setRooms(loadedRooms);
+        setError("");
+      })
+      .catch((requestError) => setError(requestError.response?.data?.detail || "Unable to load rooms. Please try again."))
       .finally(() => setLoading(false));
   };
 
@@ -37,8 +44,28 @@ export default function AdminRooms() {
     try {
       await deleteRoom(id);
       loadRooms();
+    } catch (requestError) {
+      setError(requestError.response?.data?.detail || "Unable to delete room.");
     } finally {
       setDeletingId(null);
+    }
+  };
+
+  const handleAvailability = async (room) => {
+    const is_available = room.availability_status === "unavailable";
+    const action = is_available ? "restore availability for" : "mark unavailable";
+    if (!window.confirm(`Are you sure you want to ${action} room ${room.room_number}? Existing reservations will not be changed.`)) return;
+    setUpdatingAvailabilityId(room.id);
+    setError("");
+    setNotice("");
+    try {
+      const updated = await updateRoomAvailability(room.id, is_available);
+      setRooms((current) => current.map((item) => item.id === updated.id ? updated : item));
+      setNotice(`Room ${room.room_number} is now ${updated.availability_status.replaceAll("_", " ")}.`);
+    } catch (requestError) {
+      setError(requestError.response?.data?.detail || "Unable to update room availability.");
+    } finally {
+      setUpdatingAvailabilityId(null);
     }
   };
 
@@ -53,6 +80,9 @@ export default function AdminRooms() {
           <Plus className="h-4 w-4" /> Add Room
         </button>
       </div>
+
+      {error && <p role="alert" className="rounded-lg bg-danger/10 px-4 py-3 text-sm text-danger">{error}</p>}
+      {notice && <p role="status" className="rounded-lg bg-success/10 px-4 py-3 text-sm text-success">{notice}</p>}
 
       {loading ? (
         <Loader />
@@ -87,6 +117,15 @@ export default function AdminRooms() {
                   </td>
                   <td className="px-5 py-3 text-right">
                     <div className="flex justify-end gap-2">
+                      <button
+                        onClick={() => handleAvailability(room)}
+                        disabled={updatingAvailabilityId === room.id}
+                        title={room.availability_status === "unavailable" ? "Restore availability" : "Mark unavailable"}
+                        className="p-2 rounded-lg hover:bg-secondary/50 text-primary disabled:opacity-50"
+                      >
+                        <CircleSlash className="h-4 w-4" />
+                        <span className="hidden xl:inline text-xs">{room.availability_status === "unavailable" ? "Restore" : "Mark unavailable"}</span>
+                      </button>
                       <button
                         onClick={() => setModalRoom(room)}
                         className="p-2 rounded-lg hover:bg-secondary/50 text-primary"

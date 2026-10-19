@@ -18,7 +18,8 @@ amara-stay/
       routers/        auth, rooms, bookings, visits, enquiries, dashboard, tenants
       core/           security (JWT/bcrypt) and auth dependencies
       main.py         FastAPI app entrypoint
-      seed.py         Seeds an admin user + sample rooms
+      seed.py         Seeds sample rooms only (when none exist)
+      create_admin.py Secure interactive administrator setup
     requirements.txt
     .env.example
   frontend/
@@ -42,11 +43,14 @@ amara-stay/
    ```bash
    cd backend
    pip install -r requirements.txt
-   python -m app.seed      # creates admin user + sample rooms
+   python -m app.seed      # adds sample rooms only when no rooms exist
+   python -m app.create_admin  # securely create or promote an admin account
    uvicorn app.main:app --reload --port 8000
    ```
 
-Default seeded admin login: **admin@amarastay.in / Admin@123** — change this password before deploying.
+There is no default administrator account or password. Run `python -m app.create_admin` from `backend/` in a trusted terminal. It prompts for account details and a password without echoing it. To promote an existing resident account, enter that account's email and confirm by typing `PROMOTE` when prompted. Never expose this command through a public endpoint.
+
+Admin portal: `http://localhost:5173/admin/login`; dashboard: `http://localhost:5173/admin/dashboard`.
 
 API docs available at `http://localhost:8000/docs`.
 

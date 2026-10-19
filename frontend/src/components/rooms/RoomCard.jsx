@@ -33,7 +33,7 @@ export default function RoomCard({ room, index = 0 }) {
             No Image
           </div>
         )}
-        <div className="absolute top-3 left-3">
+        <div className="absolute top-[14px] left-[14px]">
           <AvailabilityBadge status={room.availability_status} />
         </div>
       </div>

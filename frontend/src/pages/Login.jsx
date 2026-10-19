@@ -20,7 +20,7 @@ export default function Login() {
     try {
       const user = await login(data);
       const redirectTo = location.state?.from?.pathname;
-      if (user.role === "admin") navigate("/admin");
+      if (user.role === "admin") navigate("/admin/dashboard");
       else navigate(redirectTo || "/");
     } catch (err) {
       setError(err.response?.data?.detail || "Invalid email or password.");

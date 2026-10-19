@@ -57,13 +57,23 @@ export default function Navbar() {
           {isAuthenticated ? (
             <>
               {isAdmin ? (
-                <Link to="/admin" className="btn-outline text-sm px-4 py-2">
-                  <LayoutDashboard className="h-4 w-4" /> Dashboard
-                </Link>
+                <>
+                  <Link to="/washing-machine" className="btn-light text-sm px-4 py-2">
+                    Washing Machine
+                  </Link>
+                  <Link to="/admin" className="btn-outline text-sm px-4 py-2">
+                    <LayoutDashboard className="h-4 w-4" /> Dashboard
+                  </Link>
+                </>
               ) : (
-                <Link to="/my-bookings" className="btn-outline text-sm px-4 py-2">
-                  <UserIcon className="h-4 w-4" /> {user?.name?.split(" ")[0]}
-                </Link>
+                <>
+                  <Link to="/washing-machine" className="btn-outline text-sm px-4 py-2">
+                    <span className="sr-only">Open </span>Washing Machine
+                  </Link>
+                  <Link to="/my-bookings" className="btn-light text-sm px-4 py-2">
+                    <UserIcon className="h-4 w-4" /> {user?.name?.split(" ")[0]}
+                  </Link>
+                </>
               )}
               <button onClick={handleLogout} className="btn-light text-sm px-4 py-2">
                 <LogOut className="h-4 w-4" /> Logout
@@ -107,17 +117,23 @@ export default function Navbar() {
               {isAuthenticated ? (
                 <>
                   {isAdmin ? (
-                    <Link to="/admin" onClick={() => setOpen(false)} className="btn-outline w-full">
-                      Dashboard
-                    </Link>
+                    <>
+                      <Link to="/washing-machine" onClick={() => setOpen(false)} className="btn-light w-full">
+                        Washing Machine
+                      </Link>
+                      <Link to="/admin" onClick={() => setOpen(false)} className="btn-outline w-full">
+                        Dashboard
+                      </Link>
+                    </>
                   ) : (
-                    <Link
-                      to="/my-bookings"
-                      onClick={() => setOpen(false)}
-                      className="btn-outline w-full"
-                    >
-                      My Bookings
-                    </Link>
+                    <>
+                      <Link to="/washing-machine" onClick={() => setOpen(false)} className="btn-outline w-full">
+                        Washing Machine
+                      </Link>
+                      <Link to="/my-bookings" onClick={() => setOpen(false)} className="btn-light w-full">
+                        My Bookings
+                      </Link>
+                    </>
                   )}
                   <button
                     onClick={() => {

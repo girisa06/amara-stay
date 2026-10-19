@@ -2,7 +2,7 @@ import random
 import string
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app.core.deps import get_current_admin, get_current_user
 from app.database import get_db
@@ -24,9 +24,17 @@ def create_booking(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    room = db.query(Room).filter(Room.id == payload.room_id).first()
+    room = (
+        db.query(Room)
+        .options(joinedload(Room.availability_control))
+        .filter(Room.id == payload.room_id)
+        .with_for_update()
+        .first()
+    )
     if not room:
         raise HTTPException(status_code=404, detail="Room not found")
+    if room.availability_status == "unavailable":
+        raise HTTPException(status_code=409, detail="This room is temporarily unavailable")
     if room.available_beds <= 0:
         raise HTTPException(status_code=400, detail="This room is fully occupied")
 
@@ -80,21 +88,38 @@ def update_booking_status(
     db: Session = Depends(get_db),
     _: User = Depends(get_current_admin),
 ):
-    booking = db.query(Booking).filter(Booking.id == booking_id).first()
+    booking = db.query(Booking).filter(Booking.id == booking_id).with_for_update().first()
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found")
 
     previous_status = booking.status
-    booking.status = payload.status
-    if payload.payment_status:
-        booking.payment_status = payload.payment_status
+    if previous_status == BookingStatus.pending:
+        if payload.status not in (BookingStatus.confirmed, BookingStatus.rejected):
+            raise HTTPException(status_code=409, detail="Pending reservations can only be confirmed or rejected")
+        if payload.status == BookingStatus.confirmed:
+            room = (
+                db.query(Room)
+                .options(joinedload(Room.availability_control))
+                .filter(Room.id == booking.room_id)
+                .with_for_update()
+                .first()
+            )
+            if not room:
+                raise HTTPException(status_code=409, detail="The reserved room no longer exists")
+            if room.availability_status == "unavailable":
+                raise HTTPException(status_code=409, detail="The room is temporarily unavailable")
+            if room.available_beds <= 0:
+                raise HTTPException(status_code=409, detail="No beds remain in this room")
+            room.available_beds -= 1
+        booking.status = payload.status
+    elif previous_status == BookingStatus.confirmed and payload.status == BookingStatus.confirmed:
+        if payload.payment_status is None or payload.payment_status == booking.payment_status:
+            raise HTTPException(status_code=409, detail="This reservation has already been confirmed")
+    else:
+        raise HTTPException(status_code=409, detail="This reservation can no longer be changed")
 
-    room = db.query(Room).filter(Room.id == booking.room_id).first()
-    if room:
-        if payload.status == BookingStatus.confirmed and previous_status != BookingStatus.confirmed:
-            room.available_beds = max(0, room.available_beds - 1)
-        elif previous_status == BookingStatus.confirmed and payload.status != BookingStatus.confirmed:
-            room.available_beds = min(room.total_beds, room.available_beds + 1)
+    if payload.payment_status is not None:
+        booking.payment_status = payload.payment_status
 
     db.commit()
     db.refresh(booking)

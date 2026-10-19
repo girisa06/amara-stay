@@ -4,5 +4,7 @@ export const createVisitRequest = (data) => api.post("/visits", data).then((res)
 
 export const getVisitRequests = () => api.get("/visits").then((res) => res.data);
 
+export const getMyVisitRequests = () => api.get("/visits/mine").then((res) => res.data);
+
 export const updateVisitStatus = (id, data) =>
   api.put(`/visits/${id}/status`, data).then((res) => res.data);

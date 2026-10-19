@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Depends
 from sqlalchemy import func
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app.core.deps import get_current_admin
 from app.database import get_db
@@ -16,10 +16,13 @@ router = APIRouter(prefix="/api/dashboard", tags=["dashboard"])
 
 @router.get("/overview")
 def overview(db: Session = Depends(get_db), _: User = Depends(get_current_admin)):
-    rooms = db.query(Room).all()
+    rooms = db.query(Room).options(joinedload(Room.availability_control)).all()
     total_rooms = len(rooms)
+    available_rooms = sum(room.availability_status in ("available", "few_beds_left") for room in rooms)
     total_beds = sum(r.total_beds for r in rooms)
-    available_beds = sum(r.available_beds for r in rooms)
+    available_beds = sum(
+        room.available_beds for room in rooms if room.availability_status != "unavailable"
+    )
     occupied_beds = total_beds - available_beds
 
     pending_visits = (
@@ -44,12 +47,56 @@ def overview(db: Session = Depends(get_db), _: User = Depends(get_current_admin)
 
     return {
         "total_rooms": total_rooms,
+        "available_rooms": available_rooms,
+        "occupied_unavailable_rooms": total_rooms - available_rooms,
         "total_beds": total_beds,
         "occupied_beds": occupied_beds,
         "available_beds": available_beds,
         "pending_visits": pending_visits,
         "pending_reservations": pending_reservations,
         "monthly_revenue": monthly_revenue,
+    }
+
+
+@router.get("/recent-activity")
+def recent_activity(db: Session = Depends(get_db), _: User = Depends(get_current_admin)):
+    recent_visits = (
+        db.query(VisitRequest)
+        .order_by(VisitRequest.created_at.desc())
+        .limit(5)
+        .all()
+    )
+    recent_bookings = (
+        db.query(Booking)
+        .options(joinedload(Booking.room))
+        .order_by(Booking.booking_date.desc())
+        .limit(5)
+        .all()
+    )
+    return {
+        "visits": [
+            {
+                "id": visit.id,
+                "reference_id": visit.reference_id,
+                "name": visit.full_name,
+                "status": visit.status.value,
+                "date": visit.visit_date,
+                "time_slot": visit.time_slot,
+                "created_at": visit.created_at,
+            }
+            for visit in recent_visits
+        ],
+        "reservations": [
+            {
+                "id": booking.id,
+                "reference_id": booking.reference_id,
+                "name": booking.tenant_name,
+                "room_number": booking.room.room_number if booking.room else None,
+                "status": booking.status.value,
+                "created_at": booking.booking_date,
+            }
+            for booking in recent_bookings
+        ],
     }
 
 

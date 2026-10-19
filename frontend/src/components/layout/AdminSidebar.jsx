@@ -13,7 +13,7 @@ import {
 import { useAuth } from "../../context/AuthContext";
 
 const LINKS = [
-  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
+  { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/admin/rooms", label: "Rooms", icon: BedDouble },
   { to: "/admin/bookings", label: "Bookings", icon: CalendarCheck },
   { to: "/admin/visits", label: "Visit Requests", icon: ClipboardList },

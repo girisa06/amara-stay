@@ -25,3 +25,4 @@ class User(Base):
 
     bookings = relationship("Booking", back_populates="user")
     visit_requests = relationship("VisitRequest", back_populates="user")
+    payments = relationship("Payment", back_populates="user", foreign_keys="Payment.user_id")

@@ -70,6 +70,7 @@ export default function Navbar() {
                   <Link to="/washing-machine" className="btn-outline text-sm px-4 py-2">
                     <span className="sr-only">Open </span>Washing Machine
                   </Link>
+                  <Link to="/my-payments" className="btn-outline text-sm px-4 py-2">Rent Payment</Link>
                   <Link to="/my-bookings" className="btn-light text-sm px-4 py-2">
                     <UserIcon className="h-4 w-4" /> {user?.name?.split(" ")[0]}
                   </Link>
@@ -129,6 +130,9 @@ export default function Navbar() {
                     <>
                       <Link to="/washing-machine" onClick={() => setOpen(false)} className="btn-outline w-full">
                         Washing Machine
+                      </Link>
+                      <Link to="/my-payments" onClick={() => setOpen(false)} className="btn-outline w-full">
+                        Rent Payment
                       </Link>
                       <Link to="/my-bookings" onClick={() => setOpen(false)} className="btn-light w-full">
                         My Bookings

@@ -16,6 +16,7 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import MyBookings from "./pages/MyBookings";
 import WashingMachine from "./pages/WashingMachine";
+import Payments from "./pages/Payments";
 import NotFound from "./pages/NotFound";
 
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -26,6 +27,7 @@ import AdminEnquiries from "./pages/admin/Enquiries";
 import AdminTenants from "./pages/admin/Tenants";
 import AdminReports from "./pages/admin/Reports";
 import AdminSettings from "./pages/admin/Settings";
+import AdminPayments from "./pages/admin/Payments";
 import AdminLogin from "./pages/admin/AdminLogin";
 
 export default function App() {
@@ -46,6 +48,7 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/reserve-bed" element={<ReserveBed />} />
           <Route path="/my-bookings" element={<MyBookings />} />
+          <Route path="/my-payments" element={<Payments />} />
           <Route path="/washing-machine" element={<WashingMachine />} />
         </Route>
 
@@ -58,6 +61,7 @@ export default function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="rooms" element={<AdminRooms />} />
           <Route path="bookings" element={<AdminBookings />} />
+          <Route path="payments" element={<AdminPayments />} />
           <Route path="visits" element={<AdminVisitRequests />} />
           <Route path="enquiries" element={<AdminEnquiries />} />
           <Route path="tenants" element={<AdminTenants />} />

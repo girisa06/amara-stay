@@ -71,6 +71,10 @@ export default function Dashboard() {
 
       {overview && (
         <>
+          <Link to="/admin/payments" className="card flex items-center justify-between gap-4 border border-primary/15 p-5 transition hover:shadow-card-hover">
+            <div><p className="font-semibold text-ink">Payment Verification</p><p className="text-sm text-ink/60">Review resident UPI payment submissions and manage the payment UPI ID.</p></div>
+            <span className="btn-primary px-4 py-2 text-sm">Open payments</span>
+          </Link>
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             <StatCard icon={BedDouble} label="Total Rooms" value={overview.total_rooms} />
             <StatCard icon={DoorOpen} label="Available Rooms" value={overview.available_rooms} accent="success" />

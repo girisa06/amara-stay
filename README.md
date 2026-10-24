@@ -13,9 +13,9 @@ A production-ready booking platform for **AMARA Ladies PG** in Chennai. Tenants 
 amara-stay/
   backend/
     app/
-      models/        SQLAlchemy models (User, Room, Booking, VisitRequest, Enquiry)
+      models/        SQLAlchemy models (User, Room, Booking, Payment, VisitRequest, Enquiry)
       schemas/        Pydantic request/response schemas
-      routers/        auth, rooms, bookings, visits, enquiries, dashboard, tenants
+      routers/        auth, rooms, bookings, payments, visits, enquiries, dashboard, tenants
       core/           security (JWT/bcrypt) and auth dependencies
       main.py         FastAPI app entrypoint
       seed.py         Seeds sample rooms only (when none exist)
@@ -51,6 +51,12 @@ amara-stay/
 There is no default administrator account or password. Run `python -m app.create_admin` from `backend/` in a trusted terminal. It prompts for account details and a password without echoing it. To promote an existing resident account, enter that account's email and confirm by typing `PROMOTE` when prompted. Never expose this command through a public endpoint.
 
 Admin portal: `http://localhost:5173/admin/login`; dashboard: `http://localhost:5173/admin/dashboard`.
+
+### Resident UPI payments
+
+The API creates the additive `payments` and `payment_settings` tables at startup using the existing SQLAlchemy `create_all` setup. Configure the actual UPI ID from **Admin → Payment Verification**; no payment ID is prefilled. Residents can submit proof at `/my-payments`. Proof images are kept in a private backend directory (default: `backend/private_payment_proofs`), outside frontend public assets, and served only through authenticated ownership/admin checks. Set `PAYMENT_PROOF_DIR` to choose a different private storage directory. Keep this directory private and include it in deployment backups. A confirmed booking supplies the displayed current rent; due dates are not modeled and therefore show as not configured.
+
+An admin reviews submissions at `/admin/payments`, checks the transaction in UPI/bank records, then verifies or rejects it with a reason. Residents can resubmit rejected proof for that month. The previous rejected proof is replaced on resubmission; payment records are unique per resident and billing month.
 
 API docs available at `http://localhost:8000/docs`.
 

@@ -7,7 +7,8 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from app.config import settings
 from app.database import Base, engine
-from app.routers import auth, bookings, dashboard, enquiries, rooms, tenants, visits, washing_machine
+from app.routers import auth, bookings, dashboard, enquiries, payments, rooms, tenants, visits, washing_machine
+from app.models.payment import Payment, PaymentSettings
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +47,7 @@ app.include_router(enquiries.router)
 app.include_router(dashboard.router)
 app.include_router(tenants.router)
 app.include_router(washing_machine.router)
+app.include_router(payments.router)
 
 
 @app.get("/")

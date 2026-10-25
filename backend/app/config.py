@@ -6,6 +6,8 @@ class Settings(BaseSettings):
     JWT_SECRET_KEY: str = "dev-secret-key-change-me"
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
+    DB_SSL: bool = False
+    DB_SSL_CA: str = ""
     CORS_ORIGINS: str = "http://localhost:5173"
     OWNER_PHONE: str = "+91 9841321999"
     OWNER_WHATSAPP: str = "+91 9841321999"

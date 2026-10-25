@@ -49,21 +49,54 @@ h1, h2, h3, .font-display {
   @apply py-16 sm:py-20;
 }
 
+/* ── Availability Badge ─────────────────────────────────── */
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  /* subtle shadow so the badge reads cleanly over any photo */
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.10), 0 0 0 0 transparent;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.availability-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+/* Pulse animation — applied only to the Available dot via JS class */
+@keyframes badge-pulse {
+  0%, 100% { opacity: 1;   transform: scale(1);    }
+  50%       { opacity: 0.5; transform: scale(1.35); }
+}
+.availability-badge__dot--pulse {
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+/* Legacy badge utilities (used elsewhere in the admin UI) */
 .badge {
   @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
 }
-
 .badge-success {
   @apply badge bg-success/10 text-success;
 }
-
 .badge-warning {
   @apply badge bg-warning/10 text-warning;
 }
-
 .badge-danger {
   @apply badge bg-danger/10 text-danger;
 }
+
 
 .input-field {
   @apply w-full rounded-lg border border-secondary bg-white px-4 py-2.5 text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition;

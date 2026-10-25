@@ -1,16 +1,16 @@
-"""Seed the database with an admin user and the PG's room types.
+"""Seed the PG's room types without creating or changing user accounts.
 
 Run with: python -m app.seed
+
+Create the first administrator separately with: python -m app.create_admin
 
 Rents come from the owner's PG details sheet. Deposit and bed availability were
 not provided, so deposit is 0 and every bed starts as available; update both
 from the admin dashboard.
 """
 
-from app.core.security import hash_password
 from app.database import Base, SessionLocal, engine
 from app.models.room import Room, RoomPhoto, RoomType
-from app.models.user import User, UserRole
 
 BASE_FACILITIES = [
     "3 Meals Complimentary",
@@ -47,19 +47,6 @@ def seed():
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
-        admin_email = "admin@amarastay.in"
-        if not db.query(User).filter(User.email == admin_email).first():
-            db.add(
-                User(
-                    name="AMARA Admin",
-                    email=admin_email,
-                    phone="9841321999",
-                    password_hash=hash_password("Admin@123"),
-                    role=UserRole.admin,
-                )
-            )
-            print(f"Created admin user: {admin_email} / Admin@123")
-
         if db.query(Room).count() == 0:
             for number, rtype, beds, is_ac, rent in ROOMS:
                 ac_label = "AC" if is_ac else "Non-AC"

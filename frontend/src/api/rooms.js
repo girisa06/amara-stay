@@ -8,4 +8,7 @@ export const createRoom = (data) => api.post("/rooms", data).then((res) => res.d
 
 export const updateRoom = (id, data) => api.put(`/rooms/${id}`, data).then((res) => res.data);
 
+export const updateRoomAvailability = (id, is_available) =>
+  api.put(`/rooms/${id}/availability`, { is_available }).then((res) => res.data);
+
 export const deleteRoom = (id) => api.delete(`/rooms/${id}`).then((res) => res.data);

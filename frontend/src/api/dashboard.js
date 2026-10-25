@@ -2,6 +2,8 @@ import api from "./axios";
 
 export const getOverview = () => api.get("/dashboard/overview").then((res) => res.data);
 
+export const getRecentActivity = () => api.get("/dashboard/recent-activity").then((res) => res.data);
+
 export const getOccupancyTrend = () =>
   api.get("/dashboard/occupancy-trend").then((res) => res.data);
 

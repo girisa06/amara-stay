@@ -3,6 +3,7 @@ import {
   LayoutDashboard,
   BedDouble,
   CalendarCheck,
+  CreditCard,
   ClipboardList,
   MessageSquare,
   Users,
@@ -13,9 +14,10 @@ import {
 import { useAuth } from "../../context/AuthContext";
 
 const LINKS = [
-  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
+  { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/admin/rooms", label: "Rooms", icon: BedDouble },
   { to: "/admin/bookings", label: "Bookings", icon: CalendarCheck },
+  { to: "/admin/payments", label: "Payment Verification", icon: CreditCard },
   { to: "/admin/visits", label: "Visit Requests", icon: ClipboardList },
   { to: "/admin/enquiries", label: "Enquiries", icon: MessageSquare },
   { to: "/admin/tenants", label: "Tenants", icon: Users },

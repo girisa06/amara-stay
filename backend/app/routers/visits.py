@@ -4,10 +4,10 @@ import string
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.core.deps import get_current_admin, get_optional_current_user
+from app.core.deps import get_current_admin, get_current_user, get_optional_current_user
 from app.database import get_db
 from app.models.user import User
-from app.models.visit_request import VisitRequest
+from app.models.visit_request import VisitRequest, VisitStatus
 from app.schemas.visit_request import VisitRequestCreate, VisitRequestOut, VisitStatusUpdate
 
 router = APIRouter(prefix="/api/visits", tags=["visits"])
@@ -38,6 +38,19 @@ def create_visit_request(
     return visit
 
 
+@router.get("/mine", response_model=list[VisitRequestOut])
+def list_my_visit_requests(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return (
+        db.query(VisitRequest)
+        .filter(VisitRequest.user_id == current_user.id)
+        .order_by(VisitRequest.created_at.desc())
+        .all()
+    )
+
+
 @router.get("", response_model=list[VisitRequestOut])
 def list_visit_requests(db: Session = Depends(get_db), _: User = Depends(get_current_admin)):
     return db.query(VisitRequest).order_by(VisitRequest.created_at.desc()).all()
@@ -50,14 +63,18 @@ def update_visit_status(
     db: Session = Depends(get_db),
     _: User = Depends(get_current_admin),
 ):
-    visit = db.query(VisitRequest).filter(VisitRequest.id == visit_id).first()
+    visit = db.query(VisitRequest).filter(VisitRequest.id == visit_id).with_for_update().first()
     if not visit:
         raise HTTPException(status_code=404, detail="Visit request not found")
+    if visit.status != VisitStatus.pending:
+        raise HTTPException(status_code=409, detail="This visit request has already been processed")
+    if payload.status not in (VisitStatus.approved, VisitStatus.rejected, VisitStatus.rescheduled):
+        raise HTTPException(status_code=409, detail="Pending visits can only be approved, rejected, or rescheduled")
 
     visit.status = payload.status
-    if payload.visit_date:
+    if payload.status == VisitStatus.rescheduled and payload.visit_date:
         visit.visit_date = payload.visit_date
-    if payload.time_slot:
+    if payload.status == VisitStatus.rescheduled and payload.time_slot:
         visit.time_slot = payload.time_slot
 
     db.commit()

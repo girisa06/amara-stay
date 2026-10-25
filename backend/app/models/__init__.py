@@ -3,6 +3,7 @@ from app.models.room import Room, RoomType, RoomPhoto
 from app.models.booking import Booking, BookingStatus
 from app.models.visit_request import VisitRequest, VisitStatus
 from app.models.enquiry import Enquiry
+from app.models.payment import Payment, PaymentSettings, PaymentStatus
 
 __all__ = [
     "User",
@@ -15,4 +16,7 @@ __all__ = [
     "VisitRequest",
     "VisitStatus",
     "Enquiry",
+    "Payment",
+    "PaymentSettings",
+    "PaymentStatus",
 ]
